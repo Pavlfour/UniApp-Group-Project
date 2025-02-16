@@ -1,0 +1,20 @@
+CREATE TABLE Country(
+Name varchar(100) NOT NULL,
+Country_Code varchar(10) NOT NULL UNIQUE,
+PRIMARY KEY (Name)
+);
+
+CREATE TABLE University(
+Name varchar(255) NOT NULL,
+Current_Name varchar(255) NOT NULL UNIQUE,
+Domain varchar(255),
+URL varchar(255),
+State_Province varchar(255),
+Country_Name varchar(100) NOT NULL,
+Contact varchar(255),
+Schools varchar(255),
+Searches integer,
+PRIMARY KEY (Name)
+);
+
+ALTER TABLE University ADD CONSTRAINT FKUniversity485750 FOREIGN KEY (Country_Name) REFERENCES Country (Name) ON DELETE Cascade;
