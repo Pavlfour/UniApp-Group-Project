@@ -291,6 +291,9 @@ public class ShowDatabase extends javax.swing.JFrame {
 
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        // Εδώ θα κρατάμε τις εγγραφές που δεν ενημερώθηκαν
+        String failedUpdates = "";
 
         // Έλεγχος αν υπάρχουν εγγραφές στο πλαίσιο
         if (!databaseReturnedUniversities.isEmpty()) {
@@ -316,17 +319,18 @@ public class ShowDatabase extends javax.swing.JFrame {
                 success = DBQueries.updateUniversity(uni.getName(), currentName, domain, url, stateProvince, contact, schools);
 
                 if (!success) {
-                    JOptionPane.showMessageDialog(this, "Ουππςςς κάτι πήγε στραβά με την εγγραφή : " + uni.getName(), "Update Failed", JOptionPane.ERROR_MESSAGE);
-                    DBQueries.closeDB();
-                    return;
+                    failedUpdates += "\n" + uni.getName();
                 }
-
                 i++;
-
             }
-
-            JOptionPane.showMessageDialog(this, "Επιτυχία ενημέρωσης βάσης!", "Update Succeeded", JOptionPane.INFORMATION_MESSAGE);
+            
+            if(failedUpdates.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Επιτυχία ενημέρωσης βάσης!", "Update Succeeded", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Ουππςςς κάτι πήγε στραβά με τις εγγραφές : " + failedUpdates, "Update Failed", JOptionPane.ERROR_MESSAGE);
+            }
             DBQueries.closeDB();
+
         } else {
             JOptionPane.showMessageDialog(this, "Δεν υπάρχουν εμφανίσεις εγγραφών στο πλαίσιο.", "No Records", JOptionPane.WARNING_MESSAGE);
         }
@@ -435,7 +439,7 @@ public class ShowDatabase extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
